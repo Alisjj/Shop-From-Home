@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: python /dockerize-dj/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/dockerize-dj
+    ports:
+      - 8000:8000
