@@ -59,6 +59,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'dockerizeDJ.urls'
 AUTH_USER_MODEL = 'users.User'
 TAILWIND_APP_NAME = 'theme'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
 
 INTERNAL_IPS = [
     "127.0.0.1",
