@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'tailwind',
     'theme',
+    "crispy_forms",
+    "crispy_tailwind",
+
 ]
 
 MIDDLEWARE = [
@@ -61,6 +64,10 @@ AUTH_USER_MODEL = 'users.User'
 TAILWIND_APP_NAME = 'theme'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+#CRISPY FORMS
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -135,6 +142,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIR = [BASE_DIR / 'static']
+STATIC_ROOT = [BASE_DIR / 'staticfiles']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
