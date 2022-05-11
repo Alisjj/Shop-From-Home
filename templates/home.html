@@ -38,7 +38,7 @@
                 {% if user.is_authenticated %}
                 Hi {{user.username}} ❤️
                 {% else %}
-                Not Logged In, Please do so <a href={% url 'login' %}>here</a>
+                Not Logged In, Please do so <a href={% url 'account_login' %}>here</a>
                 {% endif %}
             </h1>
         </section>
