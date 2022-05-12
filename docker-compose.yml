@@ -4,6 +4,9 @@ services:
   web:
     build: .
     command: python /dockerize-dj/manage.py runserver 0.0.0.0:8000
+    environment:
+      - SECRET_KEY=django-insecure-cffj_2zrhvf-e6hbb86fbwg!rh*83=o&6o#=v87r7i3jc(xd+b
+      - DEBUG=1
     volumes:
       - .:/dockerize-dj
     ports:
