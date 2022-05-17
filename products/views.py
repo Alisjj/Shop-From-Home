@@ -1,6 +1,14 @@
-from re import template
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import DetailView, ListView, TemplateView
 
-class HomeView(TemplateView):
-    template_name = 'home.html'
+from products.models import Item
+
+class ProductListView(ListView):
+    model = Item
+    context_object_name = 'product_list'
+    template_name = 'products/home.html'
+
+class ProductDetailView(DetailView):
+    model = Item
+    context_object_name = 'product'
+    template_name = 'products/details.html'
