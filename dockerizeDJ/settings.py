@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'products.apps.ProductsConfig',
+    'django.contrib.sites',
 
     'allauth',
     'allauth.account',
@@ -90,7 +91,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
+DEFAULT_FROM_EMAIL = 'admin@shopfromhome.com'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
