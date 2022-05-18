@@ -3,5 +3,5 @@ from .views import ProductDetailView
 
 app_name = "products"
 urlpatterns = [
-    path('<int:pk>/', ProductDetailView.as_view(), name="product_details"),
+    path('<uuid:pk>/', ProductDetailView.as_view(), name="product_details"),
 ]
