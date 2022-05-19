@@ -312,6 +312,16 @@ Product | Details
           </div>
         </div>
       </div>
+      
+      <div class="max-w-2xl mx-auto px-4 flex items-center space-x-2 sm:px-6 lg:max-w-7xl lg:px-8">
+        <ul>
+          <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Reviews</h1>
+        {% for review in product.reviews.all %}
+          <li>{{review}}</li>
+
+        {% endfor %}
+      </ul>
+      </div>
     </div>
   </div>
 {% endblock content %}
