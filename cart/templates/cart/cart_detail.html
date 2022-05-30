@@ -12,7 +12,7 @@
         <div class="mt-8">
           <div class="flow-root">
             <ul role="list" class="-my-6 divide-y divide-gray-200">
-                {% if cart %}
+                {% if cart|length > 0 %}
                 {% for product in cart %}
                     {% with item=product.item %}
                     <li class="flex py-6">
@@ -24,16 +24,14 @@
                         <div>
                             <div class="flex justify-between text-base font-medium text-gray-900">
                             <h3>
-                                <a href="#"> Throwback Hip Bag </a>
+                                <a href="#"> {{ item.name }} </a>
                             </h3>
                             <p class="ml-4">${{item.price}}</p>
                             </div>
-                            <p class="mt-1 text-sm text-gray-500">Salmon</p>
                         </div>
                         <div class="flex flex-1 items-end justify-between text-sm">
                             <p class="text-gray-500">${{product.total_price}}</p>
                             <div>
-                              
                             <form action="{% url 'cart:cart-add' item.id %}" method="post">
                               Qty: {{ product.update_quantity_form.quantity }}
                               {{ product.update_quantity_form.override }}
@@ -66,12 +64,15 @@
           <p>${{cart.get_total_price}}</p>
         </div>
         <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+        {% if cart|length > 0 %}
         <div class="mt-6">
-          <a href="#" class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</a>
+          <a href="{% url 'orders:create-order' %}" class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</a>
         </div>
+        {% endif %}
         <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
           <p>
-            or <a  href="{% url 'product_list' %}" type="button" class="font-medium text-indigo-600 hover:text-indigo-500">Continue Shopping<span aria-hidden="true"> &rarr;</span></a>
+            {% if cart|length > 0 %}
+            or{% endif %} <a  href="{% url 'product_list' %}" type="button" class="font-medium text-indigo-600 hover:text-indigo-500">Continue Shopping<span aria-hidden="true"> &rarr;</span></a>
           </p>
         </div>
       </div>

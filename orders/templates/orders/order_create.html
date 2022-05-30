@@ -1,0 +1,83 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Order {% endblock %}
+{% block content %}
+
+<form method="POST">
+<div class="bg-gray-50">
+    <div class=" lg:grid lg:grid-cols-2 lg:grid-rows-[auto,auto,1fr] gap-4 max-w-96 mx-20 pt-10">
+        <div class="container  lg:row-span-3">
+            <p class="text-lg font-bold mb-5 lg:col-span-2">Contact Information</p>
+            {% csrf_token %}
+            {{form|crispy}}
+        </div>
+        <p class="text-lg font-bold ml-12 mb-7">Order Summary</p>
+        <div class="ml-12 bg-white border-2 border-gray-200">
+            {% for product in cart %}
+            <li class="flex py-6 border-b border-gray-200 px-7">
+                <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                <img src="{{product.item.cover.url}}" alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center">
+                </div>
+
+                <div class="ml-4 flex flex-1 flex-col">
+                        <div>
+                            <div class="flex justify-between text-base font-medium text-gray-900">
+                            <h3>
+                                <a href="#"> {{product.item.name}} </a>
+                            </h3>
+                            <a href="#" class="ml-4 text-indigo-500">remove</a>
+                            </div>
+                        </div>
+                    
+                <div class="flex flex-1 items-end justify-between text-sm">
+                    <p class="text-gray-500">${{product.item.price}}</p>
+                    <p class="text-gray-500">Qty : {{ product.quantity }}</p>
+
+                </div>
+            </li>
+            {% endfor %}
+            <li class="flex py-6 px-7 mx-10">
+                    
+                <div class="flex flex-1 items-end justify-between text-sm">
+                    <p>Subtotal</p>
+                    <p>${{cart.get_total_price}}</p>
+
+                </div>
+            </li>
+            <li class="flex py-6 px-7 mx-10">
+                    
+                <div class="flex flex-1 items-end justify-between text-sm">
+                    <p>Shipping</p>
+                    <p>$5.00</p>
+                </div>
+            </li>
+            <li class="flex py-6 px-7 mb-5 border-b mx-10">
+                    
+                <div class="flex flex-1 items-end justify-between text-sm">
+                    <p>Taxes</p>
+                    <p>$2.00</p>
+
+                </div>
+            </li>
+
+            <li class="flex py-6 px-7 border-b mx-10">
+                    
+                <div class="flex flex-1 items-end justify-between text-sm">
+                    <p>Total</p>
+                    <p>${{cart.get_total_price}}</p>
+
+                </div>
+            </li>
+
+            <li class="flex py-6 px-7 mx-10">
+                <div class="flex flex-1 items-end justify-between text-sm">
+                    <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Confirm Order
+                      </button>
+                </div>
+            </li>
+        </div>
+        
+    </div>
+</div>
+{% endblock content %}

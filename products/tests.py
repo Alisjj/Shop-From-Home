@@ -38,7 +38,7 @@ class HomePageTest(TestCase):
         self.assertContains(response, 'gown')
         self.assertTemplateUsed(response, 'products/home.html')
 
-    def test_book_detail_view(self):
+    def test_product_detail_view(self):
         response = self.client.get(self.item.get_absolute_url())
         no_response = self.client.get('/products/12345/')
         self.assertEqual(response.status_code, 200)
