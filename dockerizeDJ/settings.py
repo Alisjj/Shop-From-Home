@@ -39,10 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Local Apps
     'users.apps.UsersConfig',
     'products.apps.ProductsConfig',
-    'django.contrib.sites',
+    'cart.apps.CartConfig',
 
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
 
@@ -81,8 +84,8 @@ ACCOUNT_EMAIL_REQUIRED = True
 ROOT_URLCONF = 'dockerizeDJ.urls'
 AUTH_USER_MODEL = 'users.User'
 TAILWIND_APP_NAME = 'theme'
-LOGIN_REDIRECT_URL = 'home'
-ACCOUNT_LOGOUT_REDIRECT = 'home'
+LOGIN_REDIRECT_URL = 'product_list'
+ACCOUNT_LOGOUT_REDIRECT = 'product_list'
 
 
 SITE_ID=1
@@ -90,6 +93,8 @@ SITE_ID=1
 #CRISPY FORMS
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
+
+CART_SESSION_ID = 'cart'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'admin@shopfromhome.com'

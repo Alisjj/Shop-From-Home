@@ -56,22 +56,30 @@ Product | Details
       </nav>
   
       <!-- Image gallery -->
+      
       <div class="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
+        {% if images %}
         <div class="hidden aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block">
-          <img src="https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg" alt="Two each of gray, white, and black shirts laying flat." class="w-full h-full object-center object-cover">
+          <img src="{{images.0.image.url}}" alt="Two each of gray, white, and black shirts laying flat." class="w-full h-full object-center object-cover">
         </div>
         <div class="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
           <div class="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
-            <img src="https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg" alt="Model wearing plain black basic tee." class="w-full h-full object-center object-cover">
+            <img src="{{images.1.image.url}}" alt="Model wearing plain black basic tee." class="w-full h-full object-center object-cover">
           </div>
           <div class="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
-            <img src="https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg" alt="Model wearing plain gray basic tee." class="w-full h-full object-center object-cover">
+            <img src="{{images.2.image.url}}" alt="Model wearing plain gray basic tee." class="w-full h-full object-center object-cover">
           </div>
         </div>
         <div class="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4">
-          <img src="https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg" alt="Model wearing plain white basic tee." class="w-full h-full object-center object-cover">
+          <img src="{{images.3.image.url}}" class="w-full h-full object-center object-cover">
         </div>
+        {% else %}
+        <div class="hidden aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block">
+          <img src="{{product.cover.url}}" alt="Two each of gray, white, and black shirts laying flat." class="w-full h-full object-center object-cover">
+        </div>
+        {% endif %}
       </div>
+      
   
       <!-- Product info -->
       <div class="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
@@ -123,45 +131,12 @@ Product | Details
             </div>
           </div>
   
-          <form class="mt-10">
+          <form action="{% url 'cart:cart-add' product.id %}" method="post" class="mt-10">
             <!-- Colors -->
             <div>
-              <h3 class="text-sm text-gray-900 font-medium">Color</h3>
-  
-              <fieldset class="mt-4">
-                <legend class="sr-only">Choose a color</legend>
-                <div class="flex items-center space-x-3">
-                  <!--
-                    Active and Checked: "ring ring-offset-1"
-                    Not Active and Checked: "ring-2"
-                  -->
-                  <label class="-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none ring-gray-400">
-                    <input type="radio" name="color-choice" value="White" class="sr-only" aria-labelledby="color-choice-0-label">
-                    <span id="color-choice-0-label" class="sr-only"> White </span>
-                    <span aria-hidden="true" class="h-8 w-8 bg-white border border-black border-opacity-10 rounded-full"></span>
-                  </label>
-  
-                  <!--
-                    Active and Checked: "ring ring-offset-1"
-                    Not Active and Checked: "ring-2"
-                  -->
-                  <label class="-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none ring-gray-400">
-                    <input type="radio" name="color-choice" value="Gray" class="sr-only" aria-labelledby="color-choice-1-label">
-                    <span id="color-choice-1-label" class="sr-only"> Gray </span>
-                    <span aria-hidden="true" class="h-8 w-8 bg-gray-200 border border-black border-opacity-10 rounded-full"></span>
-                  </label>
-  
-                  <!--
-                    Active and Checked: "ring ring-offset-1"
-                    Not Active and Checked: "ring-2"
-                  -->
-                  <label class="-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none ring-gray-900">
-                    <input type="radio" name="color-choice" value="Black" class="sr-only" aria-labelledby="color-choice-2-label">
-                    <span id="color-choice-2-label" class="sr-only"> Black </span>
-                    <span aria-hidden="true" class="h-8 w-8 bg-gray-900 border border-black border-opacity-10 rounded-full"></span>
-                  </label>
-                </div>
-              </fieldset>
+              {{form.as_p}}
+              {% csrf_token %}
+              
             </div>
   
             <!-- Sizes -->
@@ -279,13 +254,6 @@ Product | Details
   
         <div class="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
           <!-- Description and details -->
-          <div>
-            <h3 class="sr-only">Description</h3>
-  
-            <div class="space-y-6">
-              <p class="text-base text-gray-900">{{product.description}}</p>
-            </div>
-          </div>
   
           <div class="mt-10">
             <h3 class="text-sm font-medium text-gray-900">Highlights</h3>
@@ -307,20 +275,19 @@ Product | Details
             <h2 class="text-sm font-medium text-gray-900">Details</h2>
   
             <div class="mt-4 space-y-6">
-              <p class="text-sm text-gray-600">The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming &quot;Charcoal Gray&quot; limited release.</p>
+              <p class="text-sm text-gray-600">{{product.description}}</p>
             </div>
           </div>
         </div>
-      </div>
-      
-      <div class="max-w-2xl mx-auto px-4 flex items-center space-x-2 sm:px-6 lg:max-w-7xl lg:px-8">
-        <ul>
-          <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Reviews</h1>
-        {% for review in product.reviews.all %}
-          <li>{{review}}</li>
-
-        {% endfor %}
-      </ul>
+        <div class="mt-10">
+          <ul>
+            <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Reviews</h1>
+          {% for review in product.reviews.all %}
+            <li>{{review}}</li>
+  
+          {% endfor %}
+        </ul>
+        </div>
       </div>
     </div>
   </div>
