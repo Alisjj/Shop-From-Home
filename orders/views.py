@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from cart.cart import Cart
 from django.views.generic import CreateView
-
+from .tasks import order_created
 from orders.models import Order, OrderItem
 
 
@@ -31,6 +31,7 @@ class CreateOrderView(CreateView):
                 )
 
         cart.clear()
+        order_created.delay(order.id)
         return super().form_valid(form)
 
 
