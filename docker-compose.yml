@@ -11,6 +11,7 @@ services:
       - CELERY_BACKEND=redis://redis:6379/0
       - PS_SECRET=sk_test_118affb311cd4197e3882fabad4464ebb2d97157
       - PS_PUBLIC=pk_test_eaa9579d7753ece7c23d727d05ba61d83e09ba79
+      - ENVIRONMENT=production
     volumes:
       - .:/dockerize-dj
     ports:
