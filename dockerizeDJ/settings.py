@@ -179,6 +179,9 @@ STATIC_ROOT = [BASE_DIR / 'staticfiles']
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+PS_SECRET = os.environ.get("PS_SECRET")
+PS_PUBLIC = os.environ.get("PS_PUBLIC")
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 

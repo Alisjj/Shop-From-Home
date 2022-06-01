@@ -9,6 +9,8 @@ services:
       - DEBUG=1
       - CELERY_BROKER=redis://redis:6379/0
       - CELERY_BACKEND=redis://redis:6379/0
+      - PS_SECRET=sk_test_118affb311cd4197e3882fabad4464ebb2d97157
+      - PS_PUBLIC=pk_test_eaa9579d7753ece7c23d727d05ba61d83e09ba79
     volumes:
       - .:/dockerize-dj
     ports:
@@ -47,7 +49,7 @@ services:
   
   dashboard:
     build: .
-    command: celery -A dockerizeDJ --broker=redis://redis:6379/0 flower --port=5555
+    command: celery flower 
     ports:
       - 5555:5555
     environment:

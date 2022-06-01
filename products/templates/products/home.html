@@ -22,7 +22,7 @@
                 </a>
               </h3>
             </div>
-            <p class="text-sm font-medium text-gray-900">${{product.price}}</p>
+            <p class="text-sm font-medium text-gray-900">NGN {{product.price}}</p>
           </div>
         </div>
         {% endfor %}
@@ -58,7 +58,7 @@
           <img src="{{ product.cover.url }}" alt="Tall slender porcelain bottle with natural clay textured body and cork stopper." class="w-full h-full object-center object-cover lg:w-full lg:h-full">
         </div>
         <h3 class="mt-4 text-sm text-gray-700">{{ product.name }}</h3>
-        <p class="mt-1 text-lg font-medium text-gray-900">${{product.price}}</p>
+        <p class="mt-1 text-lg font-medium text-gray-900">NGN {{product.price}}</p>
       </a>
       {% endfor %}
     </div>

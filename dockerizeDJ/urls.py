@@ -16,6 +16,7 @@ urlpatterns = [
     path('products/', include('products.urls', namespace="products")),
     path('cart/', include('cart.urls', namespace="cart")),
     path('orders/', include('orders.urls', namespace="orders")),
+    path('payment/', include('payment.urls', namespace="payment")),
 
     #Relord
     path("__reload__/", include("django_browser_reload.urls")),

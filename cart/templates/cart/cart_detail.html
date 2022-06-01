@@ -26,11 +26,11 @@
                             <h3>
                                 <a href="#"> {{ item.name }} </a>
                             </h3>
-                            <p class="ml-4">${{item.price}}</p>
+                            <p class="ml-4">NGN {{item.price}}</p>
                             </div>
                         </div>
                         <div class="flex flex-1 items-end justify-between text-sm">
-                            <p class="text-gray-500">${{product.total_price}}</p>
+                            <p class="text-gray-500">NGN {{product.total_price}}</p>
                             <div>
                             <form action="{% url 'cart:cart-add' item.id %}" method="post">
                               Qty: {{ product.update_quantity_form.quantity }}
@@ -61,7 +61,7 @@
       <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
         <div class="flex justify-between text-base font-medium text-gray-900">
           <p>Subtotal</p>
-          <p>${{cart.get_total_price}}</p>
+          <p>NGN {{cart.get_total_price}}</p>
         </div>
         <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
         {% if cart|length > 0 %}
