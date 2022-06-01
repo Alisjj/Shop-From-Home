@@ -8,9 +8,10 @@ from django.views.generic import CreateView
 from django.views import View
 from .tasks import order_created
 from orders.models import Order, OrderItem
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class CreateOrderView(CreateView):
+class CreateOrderView(LoginRequiredMixin, CreateView):
     model = Order
     template_name = "orders/order_create.html"
     
@@ -29,7 +30,6 @@ class CreateOrderView(CreateView):
     def form_valid(self, form):
         cart = Cart(self.request)
         order = form.save()
-        cart.clear()
         amount = int(cart.get_total_price())
         email = form.cleaned_data['email']
         headers = {
@@ -38,22 +38,29 @@ class CreateOrderView(CreateView):
         }
 
         data = {
-            'amount': amount,
+            'amount': amount * 100,
             'email': email,
-            'callback_url': 'http://localhost:8000/payment'
+            'callback_url': 'http://localhost:8000/payment',
+            'metadata': {
+                'order_id': str(order.id)
+            }
         }
 
 
         url = "https://api.paystack.co/transaction/initialize"
+        resp = requests.post(url=url, json=data, headers=headers)
+        respo = json.loads(resp.content)
+        print(respo)
+        self.success_url = str(respo['data']['authorization_url'])
+
+
         for product in cart:
             OrderItem.objects.create(
                 order=order, item=product['item'], 
                 price=product['price'], quantity=product['quantity']
                 )
-        resp = requests.post(url=url, json=data, headers=headers)
-        respo = json.loads(resp.content)
-        print(respo)
-        self.success_url = str(respo['data']['authorization_url'])
+
+        cart.clear()
         order_created.delay(order.id)
         return super().form_valid(form)
 

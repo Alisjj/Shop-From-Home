@@ -1,7 +1,8 @@
+from django.urls import reverse
 import json
+from orders.models import Order
 from django.conf import settings
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import View
 import requests
 
@@ -15,6 +16,18 @@ class PaymentVerification(View):
         }
         resp = json.loads((requests.get(url=url, headers=headers)).content)
 
-        resp[''] 
+        if resp['data']['status'] != "success":
+            return redirect(reverse('payment:failed'))
 
-        return HttpResponse(f'<h1>{resp}</h1>')
+        order_id = str(resp['data']['metadata']['order_id'])
+        order = Order.objects.get(id=order_id)
+        order.paid=True
+        order.save()
+
+
+
+        context = {
+            'order_id': str(resp['data']['metadata']['order_id'])
+        }
+
+        return render(request, "payment/success.html", context=context)

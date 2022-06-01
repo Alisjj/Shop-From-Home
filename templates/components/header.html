@@ -22,7 +22,7 @@
           <!-- Logo -->
           <div class="ml-4 flex lg:ml-0">
             <a href="{% url 'product_list' %}">
-              <span class="sr-only">Workflow</span>
+              <span class="sr-only">shop_from_home</span>
               <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600" alt="">
             </a>
           </div>
@@ -36,7 +36,11 @@
                   <button type="button" class="border-transparent text-gray-700 hover:text-gray-800 relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px" aria-expanded="false">Women</button>
                 </div>
                 <div class="absolute top-full inset-x-0 text-sm text-gray-500">
-                  <!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
+                  <!-- Presentational element used to render the bottom s
+
+              <a href="#" class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Company</a>
+
+              <a href="#" class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Stores</a>hadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
                   <div class="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true"></div>
 
                   
@@ -60,10 +64,6 @@
                     To: "opacity-0"
                 -->
               </div>
-
-              <a href="#" class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Company</a>
-
-              <a href="#" class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Stores</a>
             </div>
           </div>
           <div class="ml-auto flex items-center">
@@ -94,12 +94,19 @@
             <!-- Cart -->
             {% if user.is_authenticated %}
             <div class="ml-4 flow-root lg:ml-6">
+              <a href="#" class="group -m-2 p-2 flex items-center">
+                <!-- Heroicon name: outline/shopping-bag -->
+                <span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">Order History</span>
+                <span class="sr-only">items in cart, view bag</span>
+              </a>
+            </div>
+            <div class="ml-4 flow-root lg:ml-6">
               <a href="{% url 'cart:cart_detail' %}" class="group -m-2 p-2 flex items-center">
                 <!-- Heroicon name: outline/shopping-bag -->
                 <svg class="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg>
-                <span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{ cart|length }}</span>
+                <span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"></span>
                 <span class="sr-only">items in cart, view bag</span>
               </a>
             </div>
