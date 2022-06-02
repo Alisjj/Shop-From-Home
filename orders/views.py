@@ -44,7 +44,7 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
         data = {
             'amount': amount * 100,
             'email': email,
-            'callback_url': f'http://{current_site.domain}/payment',
+            'callback_url': f'https://{current_site.domain}/payment',
             'metadata': {
                 'order_id': str(order.id)
             }
