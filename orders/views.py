@@ -2,6 +2,7 @@ import json
 from django.conf import settings
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.contrib.sites.models import Site
 import requests
 from cart.cart import Cart
 from django.views.generic import CreateView
@@ -37,16 +38,19 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
             'Content-Type': 'application/json'
         }
 
+        current_site = Site.objects.get_current()
+        
+
         data = {
             'amount': amount * 100,
             'email': email,
-            'callback_url': 'http://localhost:8000/payment',
+            'callback_url': f'http://{current_site.domain}/payment',
             'metadata': {
                 'order_id': str(order.id)
             }
         }
 
-
+        
         url = "https://api.paystack.co/transaction/initialize"
         resp = requests.post(url=url, json=data, headers=headers)
         respo = json.loads(resp.content)
