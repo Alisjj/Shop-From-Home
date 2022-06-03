@@ -1,6 +1,10 @@
 import uuid
+from django.contrib.auth import get_user_model
 from django.db import models
 from products.models import Item
+
+
+User = get_user_model()
 
 class Order(models.Model):
     id = models.UUIDField(
@@ -8,6 +12,7 @@ class Order(models.Model):
         default=uuid.uuid4,
         editable=False
     )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()

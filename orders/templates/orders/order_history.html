@@ -1,0 +1,59 @@
+{% extends '_base.html' %}
+{% block title %}Order History{% endblock %}
+{% block content %}
+
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex h-full flex-col bg-white shadow-xl">
+        {% for order in orders %}
+        {% with products=order.products %}
+      <div class="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
+        <div class="flex items-start justify-between">
+          <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">Order: #{{order.id}}</h2>
+        </div>
+
+        <div class="mt-8">
+          <div class="flow-root">
+            <ul role="list" class="-my-6 divide-y divide-gray-200">
+                {% for product in products.all %}
+                    <li class="flex py-6">
+                        <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                        <img src="{{ product.item.cover.url }}" alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center">
+                        </div>
+
+                        <div class="ml-4 flex flex-1 flex-col">
+                        <div>
+                            <div class="flex justify-between text-base font-medium text-gray-900">
+                            <h3>
+                                <a href="#"> {{ product.item.name }} </a>
+                            </h3>
+                            <p class="ml-4">NGN {{product.item.price}}</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-1 items-end justify-between text-sm">
+                            <p class="text-gray-500">Qty: {{ product.quantity}}</p>
+
+                            <div class="flex">
+                            <p class="font-medium text-indigo-600 hover:text-indigo-500">Subtotal: NGN {% widthratio product.quantity 1 product.price %}</p>
+                            </div>
+                        </div>
+                        </div>
+                    </li>
+
+                {% endfor %}
+
+              <!-- More products... -->
+            </ul>
+          </div>
+        </div>
+
+
+
+
+    </div>
+    {% endwith %}
+    {% endfor %}
+</div>
+</div>
+
+{% endblock %}

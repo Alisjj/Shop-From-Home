@@ -1,4 +1,5 @@
 import json
+from django.views.generic import ListView
 from django.conf import settings
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -30,7 +31,9 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         cart = Cart(self.request)
-        order = form.save()
+        order = form.save(commit=False)
+        order.user = self.request.user
+        order.save()
         amount = int(cart.get_total_price())
         email = form.cleaned_data['email']
         headers = {
@@ -39,12 +42,16 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
         }
 
         current_site = Site.objects.get_current()
+        if settings.DEBUG:
+            call_back = f'http://{current_site.domain}/payment'
+        else:
+            call_back = f'https://{current_site.domain}/payment'
         
 
         data = {
             'amount': amount * 100,
             'email': email,
-            'callback_url': f'https://{current_site.domain}/payment',
+            'callback_url': call_back,
             'metadata': {
                 'order_id': str(order.id)
             }
@@ -77,6 +84,17 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
 
 # class CreateCheckoutSession(View):
 #     def post(self, request, *args, **kwargs):
+
+class OrderHistory(LoginRequiredMixin, ListView):
+    model = Order
+    template_name = 'orders/order_history.html'
+    queryset = Order.objects.all()
+    context_object_name = 'orders'
+
+    def get_queryset(self):
+        queryset = Order.objects.filter(user=self.request.user)
+        return queryset
+
         
 
 def created(request):

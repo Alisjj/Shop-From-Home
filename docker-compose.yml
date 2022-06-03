@@ -63,5 +63,6 @@ services:
       - db
       - redis
       - celery
+    
 volumes:
   postgres_data:
