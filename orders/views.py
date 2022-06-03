@@ -41,38 +41,42 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
             'Content-Type': 'application/json'
         }
 
-        current_site = Site.objects.get_current()
-        if settings.DEBUG:
-            call_back = f'http://{current_site.domain}/payment'
-        else:
-            call_back = f'https://{current_site.domain}/payment'
-        
+        try:
 
-        data = {
-            'amount': amount * 100,
-            'email': email,
-            'callback_url': call_back,
-            'metadata': {
-                'order_id': str(order.id)
+            current_site = Site.objects.get_current()
+            if settings.DEBUG:
+                call_back = f'http://{current_site.domain}/payment'
+            else:
+                call_back = f'https://{current_site.domain}/payment'
+            
+
+            data = {
+                'amount': amount * 100,
+                'email': email,
+                'callback_url': call_back,
+                'metadata': {
+                    'order_id': str(order.id)
+                }
             }
-        }
 
-        
-        url = "https://api.paystack.co/transaction/initialize"
-        resp = requests.post(url=url, json=data, headers=headers)
-        respo = json.loads(resp.content)
-        self.success_url = 'payment/'
-        print(self.success_url)
+            
+            url = "https://api.paystack.co/transaction/initialize"
+            resp = requests.post(url=url, json=data, headers=headers)
+            respo = json.loads(resp.content)
+            self.success_url = 'payment/'
+            print(self.success_url)
 
 
-        for product in cart:
-            OrderItem.objects.create(
-                order=order, item=product['item'], 
-                price=product['price'], quantity=product['quantity']
-                )
+            for product in cart:
+                OrderItem.objects.create(
+                    order=order, item=product['item'], 
+                    price=product['price'], quantity=product['quantity']
+                    )
 
-        cart.clear()
-        order_created.delay(order.id)
+            cart.clear()
+            order_created.delay(order.id)
+        except Exception as e:
+            print(e)
         return super().form_valid(form)
 
 
