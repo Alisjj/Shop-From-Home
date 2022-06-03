@@ -54,8 +54,8 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
         url = "https://api.paystack.co/transaction/initialize"
         resp = requests.post(url=url, json=data, headers=headers)
         respo = json.loads(resp.content)
-        print(respo)
         self.success_url = str(respo['data']['authorization_url'])
+        print(self.success_url)
 
 
         for product in cart:
