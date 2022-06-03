@@ -25,7 +25,7 @@
                         <div>
                             <div class="flex justify-between text-base font-medium text-gray-900">
                             <h3>
-                                <a href="#"> {{ product.item.name }} </a>
+                                <a href="{% url 'products:product_details' product.item.id %}"> {{ product.item.name }} </a>
                             </h3>
                             <p class="ml-4">NGN {{product.item.price}}</p>
                             </div>

@@ -17,9 +17,6 @@ import os
 from django.conf import ENVIRONMENT_VARIABLE
 import dj_database_url
 
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
