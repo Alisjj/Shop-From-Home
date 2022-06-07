@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView, ListView, TemplateView
+from django.db.models import Q
 from cart.forms import AddProductCartForm
 
 from products.models import Category, Item
@@ -39,3 +40,15 @@ class ProductDetailView(DetailView):
         
         # Add in the publisher
         return context
+
+class SearchResultView(ListView):
+    model = Item
+    context_object_name = 'product_list'
+    template_name = 'products/home.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Item.objects.filter(
+            Q(name__icontains=query)
+        )
+    
