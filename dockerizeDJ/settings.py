@@ -53,11 +53,14 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
 
+    #third party
+
     'django_browser_reload',
     'tailwind',
     'theme',
     "crispy_forms",
     "crispy_tailwind",
+    'storages',
 
 ]
 
@@ -200,6 +203,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 
+
 if DEBUG == int(False):
     SECURE_BROWSER_XSS_FILTER = True
     X_FRAME_OPTIONS = 'DENY'
@@ -211,3 +215,12 @@ if DEBUG == int(False):
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    #AWS CONFIG
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_DEFAULT_ACL = None
+    DEFAULT_FILE_STORAGE = os.environ.get('DEFAULT_FILE_STORAGE')
